@@ -1,11 +1,9 @@
 cask_args appdir: "/Applications"
 brew "rbenv"
 brew "nodenv"
-brew "nginx", restart_service: :changed
-brew "dnsmasq"
-brew "hub"
 
 # virtualization
+brew "nginx", restart_service: :changed
 cask "virtualbox"
 cask "virtualbox-extension-pack"
 cask "vagrant"
@@ -23,8 +21,11 @@ cask "sublime-text"
 cask "slack"
 
 # tools
+brew "dnsmasq"
+brew "hub"
 cask "trailer"
 cask "caffeine"
+brew "go"
 
 # browsers
 cask "google-chrome"
