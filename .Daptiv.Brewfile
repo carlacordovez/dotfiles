@@ -26,6 +26,7 @@ brew "hub"
 cask "trailer"
 cask "caffeine"
 brew "go"
+brew "gawk"
 
 # browsers
 cask "google-chrome"
