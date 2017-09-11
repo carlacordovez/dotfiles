@@ -5,3 +5,6 @@ go get github.com/cbednarski/hostess/cmd/hostess
 if [ =f "$GOPATH/go/bin/hostess"] && ! [ -L "/usr/local/bin/hostess" ]; then
   ln -sv "$GOPATH/go/bin/hostess" /usr/local/bin/hostess
 fi
+
+echo 'setup ppm project...'
+bash $DAPTIV_DOTFILES/projects/setup ppm
