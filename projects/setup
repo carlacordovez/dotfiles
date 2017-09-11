@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT=$1
+PROJECT_SETUP_FILE="$DIR/$PROJECT/setup"
+
+INSTALLED_PROJECTS_FILE="$HOME/.installed-projects"
+[ -f "$INSTALLED_PROJECTS_FILE" ] || touch "$INSTALLED_PROJECTS_FILE"
+
+if [ -z "$PROJECT" ]; then
+  echo "Please specify a project to setup."
+elif [ -f "$PROJECT_SETUP_FILE" ]; then
+  
+  if grep -q "$PROJECT$"; then 
+    echo "$PROJECT has already been setup"
+  else
+    bash "$DIR/$PROJECT/setup"
+    echo "$PROJECT" >> "$INSTALLED_PROJECTS_FILE"
+  fi
+  
+else
+  echo "Project $PROJECT not found."
+fi
+  
