@@ -13,7 +13,7 @@ if [ -z "$PROJECT" ]; then
 elif [ -f "$PROJECT_SETUP_FILE" ]; then
   
   echo "Checking for project setup script for: $PROJECT"
-  if grep -q "$PROJECT$" "$PROJECT_SETUP_FILE"; then 
+  if grep -q "$PROJECT$" "$INSTALLED_PROJECTS_FILE"; then 
     echo "$PROJECT has already been setup"
   else
     echo "Running: $PROJECT_SETUP_FILE"
