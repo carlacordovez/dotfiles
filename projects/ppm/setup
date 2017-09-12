@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
+[ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+echo 'adding host entries for ppm...'
 bash "$DIR/add-host-entries.sh"
+
+echo 'setting up vm...'
 bash "$DIR/setup-vm.sh"
 

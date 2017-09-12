@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT=$1
 PROJECT_SETUP_FILE="$DIR/$PROJECT/setup"
@@ -10,10 +12,12 @@ if [ -z "$PROJECT" ]; then
   echo "Please specify a project to setup."
 elif [ -f "$PROJECT_SETUP_FILE" ]; then
   
-  if grep -q "$PROJECT$"; then 
+  echo "Checking for project setup script for: $PROJECT"
+  if grep -q "$PROJECT$" "$PROJECT_SETUP_FILE"; then 
     echo "$PROJECT has already been setup"
   else
-    bash "$DIR/$PROJECT/setup"
+    echo "Running: $PROJECT_SETUP_FILE"
+    bash "$PROJECT_SETUP_FILE"
     echo "$PROJECT" >> "$INSTALLED_PROJECTS_FILE"
   fi
   
