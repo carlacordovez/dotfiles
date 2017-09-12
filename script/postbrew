@@ -2,7 +2,7 @@
 
 echo 'installing hostess command line tool...'
 go get github.com/cbednarski/hostess/cmd/hostess
-if [ =f "$GOPATH/go/bin/hostess"] && ! [ -L "/usr/local/bin/hostess" ]; then
+if [ -f "$GOPATH/go/bin/hostess" ] && ! [ -L "/usr/local/bin/hostess" ]; then
   ln -sv "$GOPATH/go/bin/hostess" /usr/local/bin/hostess
 fi
 
