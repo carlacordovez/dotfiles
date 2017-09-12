@@ -4,6 +4,10 @@ DAPTIV_DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
 [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
+echo 'installing node 6.11.3...'
+nodenv install 6.11.3
+nodenv global 6.11.3
+
 echo 'installing hostess command line tool...'
 go get github.com/cbednarski/hostess/cmd/hostess
 if [ -f "$GOPATH/go/bin/hostess" ] && ! [ -L "/usr/local/bin/hostess" ]; then

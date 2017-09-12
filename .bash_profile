@@ -11,7 +11,7 @@ export HOMEBREW_NO_ANALYTICS="1"
 export PPM_DEV_VM_IP="192.168.57.101"
 export SRC_DIR="$HOME/src"
 
-export PATH="$PATH:$GOPATH/bin"
+export PATH="$PATH:$GOPATH/bin:$HOME/.nodenv/shims"
 # set open file limit to 3000 which is max before being ignored
 ulimit -n 3000
 
