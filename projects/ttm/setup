@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if ! [ -d "$SRC_DIR/teammember-api" ]; then
+  echo "cloning teammember-api repo..."
+  git clone git@github.com:daptiv/teammember-api.git "$SRC_DIR/teammember-api"
+fi
+
+if ! [ -d "$SRC_DIR/teammember-client" ]; then
+  echo "cloning teammember-client repo..."
+  git clone git@github.com:daptiv/teammember-client.git "$SRC_DIR/teammember-client"
+  git checkout add-strapfile
+  
+  echo "running strapfile..."
+  bash "$SRC_DIR/teammember-client/strap.sh"
+fi
