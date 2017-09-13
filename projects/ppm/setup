@@ -52,3 +52,6 @@ server {
 }
 EOF
 
+echo 'reload nginx config...'
+sudo nginx -s reload
+

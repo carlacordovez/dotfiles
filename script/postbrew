@@ -71,5 +71,8 @@ http {
 }
 EOF
 
+echo 'reload nginx config...'
+sudo nginx -s reload
+
 echo 'setup ppm project...'
 bash "$DAPTIV_DOTFILES/projects/setup" ppm
