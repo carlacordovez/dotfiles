@@ -24,7 +24,7 @@ daemon off;
 user $USER staff;
 
 worker_processes 2;
-pid $NGINX_LOG_DIR/nginx.pid;
+pid /usr/local/var/run/nginx.pid;
 
 events {
   worker_connections 1024;
