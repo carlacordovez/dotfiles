@@ -13,10 +13,8 @@ DEV_PPM_DIR="$SRC_DIR/dev_ppm"
 
 mkdir -p "$DEV_PPM_DIR"
 
-if ! [ -f "$DEV_PPM_DIR/Vagrantfile" ]; then
-  echo "copying Vagrantfile..."
-  cp "$DIR/Vagrantfile" "$DEV_PPM_DIR/Vagrantfile"
-fi
+echo "copying Vagrantfile..."
+cp -fv "$DIR/Vagrantfile" "$DEV_PPM_DIR/Vagrantfile"
 
 echo "running vagrant up..."
 cd "$DEV_PPM_DIR"
