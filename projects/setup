@@ -4,8 +4,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT=$1
 PROJECT_SETUP_FILE="$DIR/$PROJECT/setup"
 
-[ -z "$PROFILE_LOADED" ] && [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
-
 INSTALLED_PROJECTS_FILE="$HOME/.installed-projects"
 [ -f "$INSTALLED_PROJECTS_FILE" ] || touch "$INSTALLED_PROJECTS_FILE"
 
