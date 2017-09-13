@@ -18,7 +18,7 @@ if ! [ -f "$GOPATH/go/bin/hostess" ]; then
 fi
 
 echo 'update default nginx config...'
-sudo tee "$NGINX_CONFIG_DIR" <<EOF
+sudo tee "$NGINX_CONFIG_DIR/nginx.conf" <<EOF
 daemon off;
 
 user $USER staff;
