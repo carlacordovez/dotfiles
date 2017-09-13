@@ -10,6 +10,7 @@ export CONSUL_URL="http://devconsul.daptiv.com"
 export NPM_TOKEN="c50ca4f6-4a61-4d17-a081-dbbbf8a0f0e6"
 export HOMEBREW_NO_ANALYTICS="1"
 export PPM_DEV_VM_IP="192.168.57.101"
+export PPM_VM_IP="$PPM_DEV_VM_IP" # some scripts require this
 export SRC_DIR="$HOME/src"
 export NGINX_CONFIG_DIR="/usr/local/etc/nginx"
 export NGINX_SITES_CONFIG_DIR="$NGINX_CONFIG_DIR/servers"
