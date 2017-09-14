@@ -19,7 +19,6 @@ fi
 
 echo 'update default nginx config...'
 sudo tee "$NGINX_CONFIG_DIR/nginx.conf" <<EOF
-daemon off;
 
 user $USER staff;
 
@@ -70,6 +69,15 @@ http {
   include $NGINX_SITES_CONFIG_DIR/*;
 }
 EOF
+
+if ! [ -f "/Library/LaunchDaemons/homebrew.mxcl.nginx.plist" ]; then
+  echo 'register nginx to startup after boot...'
+  sudo cp /usr/local/opt/nginx/homebrew.mxcl.nginx.plist /Library/LaunchDaemons
+  sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+  
+  echo 'add /usr/local/bin to application path...'
+  sudo launchctl config user path "/usr/local/bin:$PATH:$GOPATH/go/bin"
+fi
 
 echo 'reload nginx config...'
 sudo nginx -s reload
