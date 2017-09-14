@@ -16,6 +16,11 @@ mkdir -p "$DEV_PPM_DIR"
 echo "copying Vagrantfile..."
 cp -fv "$DIR/Vagrantfile" "$DEV_PPM_DIR/Vagrantfile"
 
+echo "checking vagrant id"
+if [ 1 == $(vboxmanage list vms | grep -c "dev_ppm") ] ; then
+	vboxmanage showvminfo "dev_ppm" --machinereadable | egrep "UUID=" | cut -b 7-42 > "$DEV_PPM_DIR/.vagrant/machines/default/virtualbox/id"
+fi
+
 echo "running vagrant up..."
 cd "$DEV_PPM_DIR"
 vagrant up
