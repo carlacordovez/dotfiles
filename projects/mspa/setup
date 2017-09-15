@@ -13,7 +13,8 @@ printf "\n** Proceeding with changes\n"
 sudo hostess add ppm.dev.daptiv.com 127.0.0.1
 
 sudo sed \
-    "s|NGINX_LOG_DIR|$NGINX_LOG_DIR|" \
+    -e "s|NGINX_LOG_DIR|$NGINX_LOG_DIR|" \
+    -e "s|NGINX_SITES_CONFIG_DIR|$NGINX_SITES_CONFIG_DIR|" \
     <"$DIR/ppm-mspa-shared.nginx.conf" \
     >"$NGINX_SITES_CONFIG_DIR/ppm-mspa-shared.conf"
 
