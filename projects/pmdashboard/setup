@@ -14,9 +14,9 @@ do
     printf "** Cloning $REPO repo **\n"
     git clone git@github.com:daptiv/$REPO.git "$REPO_DIR"
 
-    if [ -e "$REPO_DIR/.strap/strap.sh" ]; then
+    if [ -e "$REPO_DIR/strap.sh" ]; then
       printf "\n** Running strap script **\n"
-      bash "$REPO_DIR/.strap/strap.sh"
+      bash "$REPO_DIR/strap.sh"
     fi
   fi
 done
