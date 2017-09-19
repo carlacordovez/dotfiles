@@ -11,10 +11,6 @@ fi
 if ! [ -d "$SRC_DIR/teammember-client" ]; then
   echo "cloning teammember-client repo..."
   git clone git@github.com:daptiv/teammember-client.git "$SRC_DIR/teammember-client"
-  (
-    cd "$SRC_DIR/teammember-client"
-    git checkout add-strapfile
-  )
   
   echo "running strapfile..."
   bash "$SRC_DIR/teammember-client/strap.sh"
