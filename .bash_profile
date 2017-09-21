@@ -16,7 +16,7 @@ export NGINX_CONFIG_DIR="/usr/local/etc/nginx"
 export NGINX_SITES_CONFIG_DIR="$NGINX_CONFIG_DIR/servers"
 export NGINX_LOG_DIR="/usr/local/var/log/nginx"
 
-export PATH="$HOME/.nodenv/shims$PATH:$GOPATH/bin"
+export PATH="$HOME/.nodenv/shims:$PATH:$GOPATH/bin"
 # set open file limit to 3000 which is max before being ignored
 ulimit -n 3000
 
