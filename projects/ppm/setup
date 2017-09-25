@@ -9,11 +9,6 @@ bash "$DIR/add-host-entries.sh"
 echo 'setting up vm...'
 bash "$DIR/setup-vm.sh"
 
-echo 'clone ppm spa...'
-if ! [ -d "$SRC_DIR/ppmspa" ]; then
-  git clone git@github.com:daptiv/ppmspa.git "$SRC_DIR/ppmspa"
-fi
-
 echo 'add nginx config for ppm...'
 sudo tee "$NGINX_SITES_CONFIG_DIR/ppm.conf" <<EOF
 server {
@@ -23,38 +18,22 @@ server {
 
   client_max_body_size 50M;
 
+  location / {
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header Host \$http_host;
+    proxy_redirect off;
+    proxy_pass http://localvm.daptiv.com:80;
+  }
+
   location /spa {
     autoindex on;
-    alias $SRC_DIR/ppmspa/output/package/;
-  }
-
-  location / {
-    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-    proxy_set_header Host \$http_host;
-    proxy_redirect off;
-    proxy_pass http://localvm.daptiv.com:80;
-  }
-}
-
-server {
-  access_log $NGINX_LOG_DIR/dev.daptiv.com.access.log main;
-  listen 80;
-  server_name dev.daptiv.com;
-
-  client_max_body_size 50M;
-
-  location / {
-    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-    proxy_set_header Host \$http_host;
-    proxy_redirect off;
-    proxy_pass http://localvm.daptiv.com:80;
+    alias $SRC_DIR/PpmSpa/output/package/;
   }
 }
 EOF
 
 echo 'reload nginx config...'
 sudo nginx -s reload
-
 
 # Add the NatNetwork for VirtualBox
 vboxmanage natnetwork add --netname NatNetwork --network 10.0.2.0/24 --ipv6 off --enable 2>/dev/null
