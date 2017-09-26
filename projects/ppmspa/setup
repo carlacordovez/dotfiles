@@ -8,5 +8,10 @@ if ! [ -d "$SRC_DIR/PpmSpa" ]; then
     git clone git@github.com:daptiv/PpmSpa.git "$SRC_DIR/PpmSpa"
 fi
 
-echo "running strapfile..."
-[ -f "$SRC_DIR/PpmSpa/strap.sh" ] && "$SRC_DIR/PpmSpa/strap.sh"
+if [ -f "$SRC_DIR/PpmSpa/strap.sh" ]; then
+	echo "running strapfile..."
+	bash "$SRC_DIR/PpmSpa/strap.sh"
+else
+	echo "strap file not found in PpmSpa repo!"
+fi
+
