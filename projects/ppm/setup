@@ -36,5 +36,5 @@ echo 'reload nginx config...'
 sudo nginx -s reload
 
 # Add the NatNetwork for VirtualBox
-vboxmanage natnetwork add --netname NatNetwork --network 10.0.2.0/24 --ipv6 off --enable 2>/dev/null
-vboxmanage natnetwork start --netname NatNetwork
+# vboxmanage natnetwork add --netname NatNetwork --network 10.0.2.0/24 --ipv6 off --enable 2>/dev/null
+# vboxmanage natnetwork start --netname NatNetwork
