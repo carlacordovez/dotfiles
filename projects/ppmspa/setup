@@ -4,7 +4,7 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if ! [ -d "$SRC_DIR/PpmSpa" ]; then
-    ßecho 'cloning PpmSpa repo...'
+    echo 'cloning PpmSpa repo...'
     git clone git@github.com:daptiv/PpmSpa.git "$SRC_DIR/PpmSpa"
 fi
 
