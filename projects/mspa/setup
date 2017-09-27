@@ -11,6 +11,7 @@ sudo /usr/bin/true
 printf "\n** Proceeding with changes\n"
 
 sudo hostess add ppm.dev.daptiv.com 127.0.0.1
+sudo hostess add devrm.daptiv.com $PPM_DEV_VM_IP
 
 sudo sed \
     -e "s|NGINX_LOG_DIR|$NGINX_LOG_DIR|" \
