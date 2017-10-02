@@ -30,6 +30,19 @@ server {
     alias $SRC_DIR/PpmSpa/output/package/;
   }
 }
+
+server {
+  access_log /usr/local/var/log/nginx/devppm-admin.daptiv.com.access.log main;
+  listen 81;
+  server_name devppm.daptiv.com;
+
+  location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://localvm.daptiv.com:81;
+  }
+}
 EOF
 
 echo 'reload nginx config...'
