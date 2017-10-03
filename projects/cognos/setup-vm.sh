@@ -22,3 +22,4 @@ fi
 echo "running vagrant up..."
 cd "$COGNOS_VM_DIR"
 vagrant up
+
