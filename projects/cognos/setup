@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo 'adding host entries for ppm...'
+bash "$DIR/add-host-entries.sh"
+
+echo 'setting up vm...'
+bash "$DIR/setup-vm.sh"
+
+echo 'add nginx config for ppm...'
+sudo tee "$NGINX_SITES_CONFIG_DIR/ppm.conf" <<EOF
+server {
+  access_log /usr/local/var/log/nginx/mycognos10vm.hq.daptiv.com.access.log main;
+  listen 80;
+  server_name mycognos10vm.hq.daptiv.com;
+
+  location / {
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header Host \$http_host;
+    proxy_redirect off;
+    proxy_pass http://cognosvm.daptiv.com;
+  }
+}
+EOF
+
+echo 'reload nginx config...'
+sudo nginx -s reload
+
