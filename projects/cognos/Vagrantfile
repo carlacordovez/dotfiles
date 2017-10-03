@@ -46,7 +46,7 @@ Vagrant.configure(2) do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     vb.name = "c1022"
-    vb.customize ["modifyvm", :id, "--natbindip1", "#{ENV["COGNOS_VM_IP"]}"]
+    vb.customize ["modifyvm", :id, "--natbindip2", "#{ENV["COGNOS_VM_IP"]}"]
     vb.customize ["modifyvm", :id, "--vram", "64"]
     vb.customize ["modifyvm", :id, "--accelerate2dvideo", "on"]
     vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
