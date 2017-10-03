@@ -32,9 +32,9 @@ server {
 }
 
 server {
-  access_log /usr/local/var/log/nginx/devppm-admin.daptiv.com.access.log main;
-  listen 81;
-  server_name devppm.daptiv.com;
+  access_log /usr/local/var/log/nginx/devadmin.daptiv.com.access.log main;
+  listen 80;
+  server_name devadmin.daptiv.com;
 
   location / {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
