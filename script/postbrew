@@ -2,6 +2,12 @@
 
 DAPTIV_DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
+
+# re-enable GateKeeper for brew installs on osx High Sierra (10.13)
+sw_vers -productVersion | grep -q -E "^10.13" && {
+  sudo spctl --master-enable
+}
+
 [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
 if ! nodenv versions | grep -q -E ' 6.11.3 '; then
