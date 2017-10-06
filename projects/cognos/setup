@@ -3,9 +3,9 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo 'adding host entries for c1022...'
+echo 'adding host entries for cognos 10.2.2...'
 bash "$DIR/add-host-entries.sh"
 
-echo 'setting up cognos vm...'
+echo 'setting up cognos 10.2.2 vm...'
 bash "$DIR/setup-vm.sh"
 
