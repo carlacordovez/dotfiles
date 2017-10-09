@@ -20,9 +20,3 @@ ensure_dotfile_link .bash_profile
 ensure_dotfile_link .bashrc
 ensure_dotfile_link .npmrc
 ensure_dotfile_link .Daptiv.Brewfile
-
-# disable GateKeeper for brew installs on osx High Sierra (10.13)
-# virtualbox fails to install on High Sierra if GateKeeper is enabled
-sw_vers -productVersion | grep -q -E "^10.13" && {
-  sudo spctl --master-disable
-}
