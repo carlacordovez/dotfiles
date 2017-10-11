@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if ! [ -d "$SRC_DIR/project-team-board" ]; then
+  echo "cloning project-team-board repo..."
+  git clone git@github.com:daptiv/project-team-board.git "$SRC_DIR/project-team-board"
+fi
+
+if ! [ -d "$SRC_DIR/project-task-board-api" ]; then
+  echo "cloning project-task-board-api repo..."
+  git clone git@github.com:daptiv/project-task-board-api.git "$SRC_DIR/project-task-board-api"
+fi
+
+echo "running strapfile..."
+bash "$SRC_DIR/project-team-board/strap.sh"

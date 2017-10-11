@@ -7,17 +7,26 @@ PROJECT_SETUP_FILE="$DIR/$PROJECT/setup"
 INSTALLED_PROJECTS_FILE="$HOME/.installed-projects"
 [ -f "$INSTALLED_PROJECTS_FILE" ] || touch "$INSTALLED_PROJECTS_FILE"
 
+FORCE=
+for x; do
+  if [[ "$x" = "-f" ]] || [[ "$x" = "--force" ]]; then
+    FORCE="1"
+  fi
+done
+
 if [ -z "$PROJECT" ]; then
   echo "Please specify a project to setup."
 elif [ -f "$PROJECT_SETUP_FILE" ]; then
   
   echo "Checking for project setup script for: $PROJECT"
-  if grep -q "$PROJECT$" "$INSTALLED_PROJECTS_FILE"; then 
+  if grep -q "$PROJECT$" "$INSTALLED_PROJECTS_FILE" && [ -z "$FORCE" ]; then 
     echo "$PROJECT has already been setup"
   else
     echo "Running: $PROJECT_SETUP_FILE"
     bash "$PROJECT_SETUP_FILE"
-    echo "$PROJECT" >> "$INSTALLED_PROJECTS_FILE"
+    if ! grep -q "$PROJECT$" "$INSTALLED_PROJECTS_FILE"; then
+      echo "$PROJECT" >> "$INSTALLED_PROJECTS_FILE"
+    fi
   fi
   
 else
