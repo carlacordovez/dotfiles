@@ -2,6 +2,7 @@
 
 DAPTIV_DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
+
 [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
 if ! nodenv versions | grep -q -E ' 6.11.3 '; then

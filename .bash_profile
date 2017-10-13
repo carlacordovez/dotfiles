@@ -21,5 +21,13 @@ export PATH="$HOME/.nodenv/shims:$PATH:$GOPATH/bin"
 # set open file limit to 3000 which is max before being ignored
 ulimit -n 3000
 
+vmstart() {
+  VBoxManage startvm ${1:-dev_ppm} --type headless
+}
+
+vmstop() {
+  VBoxManage controlvm ${1:-dev_ppm} poweroff
+}
+
 [ -f "$DOTFILES_HOME/.bash_profile" ] && source $DOTFILES_HOME/.bash_profile
 [ -f "$HOME/.bashrc" ] && source $HOME/.bashrc

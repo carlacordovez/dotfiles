@@ -19,11 +19,28 @@ def app_exists(app):
     return os.path.isdir(app_file)
 
 def fix_casks(brewfile):
+    brewfile_path = "~/{0}".format(brewfile.strip())
+    
+    if not os.path.isfile(brewfile_path):
+        log("Brew file not found, skipping.")
+        return
+
     log("fixing casks in {0}".format(brewfile))
-    apps = check_output("awk '/^cask / {{ gsub(/\"/, \"\", $2) ; print $2 }}' ~/{0}".format(brewfile), shell=True).strip().split('\n')
+    app_output = check_output("awk '/^cask / {{ gsub(/\"/, \"\", $2) ; print $2 }}' {0}".format(brewfile_path), shell=True).strip()
+    
+    if app_output == '':
+        log("brewfile '{0}' has no cask entries.".format(brewfile))
+        return
+
+    apps = app_output.split('\n')
     casks = check_output("brew cask ls -1", shell=True).strip().split('\n')
 
+    log("checking {0} cask apps.".format(len(apps)))
     for app in apps:
+        log("checking app '{0}'".format(app))
+        if app == '':
+            continue
+
         if app in casks:
             log("skipping properly casked app: {0}".format(app))
             continue
