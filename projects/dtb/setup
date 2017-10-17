@@ -1,17 +1,9 @@
 #!/usr/bin/env bash
 set -e
+source "$PWD/projects/functions.sh"
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-if ! [ -d "$SRC_DIR/project-team-board" ]; then
-  echo "cloning project-team-board repo..."
-  git clone git@github.com:daptiv/project-team-board.git "$SRC_DIR/project-team-board"
-fi
-
-if ! [ -d "$SRC_DIR/project-task-board-api" ]; then
-  echo "cloning project-task-board-api repo..."
-  git clone git@github.com:daptiv/project-task-board-api.git "$SRC_DIR/project-task-board-api"
-fi
+clone-missing-repo "project-team-board"
+clone-missing-repo "project-task-board-api"
 
 echo "running strapfile..."
 bash "$SRC_DIR/project-team-board/strap.sh"

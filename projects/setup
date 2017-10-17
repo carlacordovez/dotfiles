@@ -14,17 +14,22 @@ for x; do
   fi
 done
 
+PROJECT_INSTALLED=
+if grep -q "$PROJECT$" "$INSTALLED_PROJECTS_FILE"; then
+  PROJECT_INSTALLED="1"
+fi
+
 if [ -z "$PROJECT" ]; then
   echo "Please specify a project to setup."
 elif [ -f "$PROJECT_SETUP_FILE" ]; then
   
   echo "Checking for project setup script for: $PROJECT"
-  if grep -q "$PROJECT$" "$INSTALLED_PROJECTS_FILE" && [ -z "$FORCE" ]; then 
+  if [ -n "$PROJECT_INSTALLED" ] && [ -z "$FORCE" ]; then 
     echo "$PROJECT has already been setup"
   else
     echo "Running: $PROJECT_SETUP_FILE"
     bash "$PROJECT_SETUP_FILE"
-    if ! grep -q "$PROJECT$" "$INSTALLED_PROJECTS_FILE"; then
+    if [ -z "$PROJECT_INSTALLED" ]; then
       echo "$PROJECT" >> "$INSTALLED_PROJECTS_FILE"
     fi
   fi
