@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+source "$PWD/projects/functions.sh"
+
+clone-missing-repo "project-team-board"
+clone-missing-repo "project-task-board-api"
+
+echo "running strapfile..."
+bash "$SRC_DIR/project-team-board/strap.sh"

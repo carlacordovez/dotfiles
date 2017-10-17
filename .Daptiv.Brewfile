@@ -1,6 +1,7 @@
 cask_args appdir: "/Applications"
 brew "rbenv"
 brew "nodenv"
+cask "java"
 
 # virtualization
 brew "nginx", restart_service: :changed
@@ -27,6 +28,7 @@ cask "trailer"
 cask "caffeine"
 brew "go"
 brew "gawk"
+brew "awscli"
 
 # browsers
 cask "google-chrome"
