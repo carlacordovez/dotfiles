@@ -2,16 +2,9 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
 
-if ! [ -d "$SRC_DIR/teammember-api" ]; then
-  echo "cloning teammember-api repo..."
-  git clone git@github.com:daptiv/teammember-api.git "$SRC_DIR/teammember-api"
-fi
+source "$PROJECTS_DIR/functions.sh"
 
-if ! [ -d "$SRC_DIR/teammember-client" ]; then
-  echo "cloning teammember-client repo..."
-  git clone git@github.com:daptiv/teammember-client.git "$SRC_DIR/teammember-client"
-fi
-
-echo "running strapfile..."
-bash "$SRC_DIR/teammember-client/strap.sh"
+clone-missing-repo 'teammember-api'
+clone-and-strap-repo 'teammember-client'

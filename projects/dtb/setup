@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -e
-source "$PWD/projects/functions.sh"
 
-clone-missing-repo "project-team-board"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
+
+source "$PROJECTS_DIR/functions.sh"
+
 clone-missing-repo "project-task-board-api"
-
-echo "running strapfile..."
-bash "$SRC_DIR/project-team-board/strap.sh"
+clone-and-strap-repo "project-team-board"
