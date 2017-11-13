@@ -29,6 +29,7 @@ cask "caffeine"
 brew "go"
 brew "gawk"
 brew "awscli"
+brew "git-flow-avh"
 
 # browsers
 cask "google-chrome"
