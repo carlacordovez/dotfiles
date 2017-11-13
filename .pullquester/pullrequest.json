@@ -1,0 +1,28 @@
+{
+    "revision": 3,
+    "defaultBaseBranch": "master",
+    "developers": [
+        {
+            "name": "James Trinklein",
+            "value": "@jtrinklein"
+        },
+        {
+            "name": "Ramun McCallum",
+            "value": "@dachew"
+        }
+    ],
+    "testers": [
+        {
+            "name": "James Trinklein",
+            "value": "@jtrinklein"
+        },
+        {
+            "name": "Phillip Balsley",
+            "value": "@pbalsley"
+        },
+        {
+            "name": "Ramun McCallum",
+            "value": "@dachew"
+        }
+    ]
+}
