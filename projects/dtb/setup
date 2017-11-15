@@ -7,4 +7,4 @@ PROJECTS_DIR="$DIR/.."
 source "$PROJECTS_DIR/functions.sh"
 
 clone-missing-repo "project-task-board-api"
-clone-and-strap-repo "project-team-board"
+clone-with-options --strap "project-team-board"
