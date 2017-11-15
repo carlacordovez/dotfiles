@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -e
+
+REPOS=( ppm-vapi-new-feature-popup ppm-cmpt-new-feature-popup ppm-wrpr-new-feature-popup new-feature-composer )
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+source "$DIR/../functions.sh"
+
+bash "$DIR/../setup" mspa
+
+for REPO in ${REPOS[@]}
+do
+  clone-and-strap-repo "$REPO"
+
+  REPO_DIR="$SRC_DIR/$REPO"
+  if [ -e "$REPO_DIR/strap.sh" ]; then
+    printf "\n** Running strap script **\n"
+    bash "$REPO_DIR/strap.sh"
+  fi
+done
