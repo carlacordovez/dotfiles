@@ -7,4 +7,4 @@ PROJECTS_DIR="$DIR/.."
 source "$PROJECTS_DIR/functions.sh"
 
 clone-missing-repo 'teammember-api'
-clone-and-strap-repo 'teammember-client'
+clone-with-options --strap 'teammember-client'

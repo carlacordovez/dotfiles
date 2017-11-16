@@ -2,22 +2,69 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
 
-printf "\nThis script requires sudo access to configure nginx, hosts, etc. "
-printf "If prompted, please enter your password.\n"
+source "$PROJECTS_DIR/functions.sh"
+
+log-msg "This script requires sudo access to configure nginx, hosts, etc." \
+        "If prompted, please enter your password."
+
 sudo -v
 sudo /usr/bin/true
 
-printf "\n** Proceeding with changes\n"
+log-msg 'Adding host entries'
 
 sudo hostess add ppm.dev.daptiv.com 127.0.0.1
 sudo hostess add devrm.daptiv.com $PPM_DEV_VM_IP
 
-sudo sed \
-    -e "s|NGINX_LOG_DIR|$NGINX_LOG_DIR|" \
-    -e "s|NGINX_SITES_CONFIG_DIR|$NGINX_SITES_CONFIG_DIR|" \
-    <"$DIR/ppm-mspa-shared.nginx.conf" \
-    >"$NGINX_SITES_CONFIG_DIR/ppm-mspa-shared.conf"
+log-msg 'Adding nginx configuration'
+sudo tee "$NGINX_SITES_CONFIG_DIR/ppm-mspa-shared.conf" <<EOF
+include $NGINX_SITES_CONFIG_DIR/mspa-upstreams/*.conf;
+
+server {
+  access_log $NGINX_LOG_DIR/mspa.access.log main;
+  listen 80;
+  server_name ppm.dev.daptiv.com;
+
+  client_max_body_size 50M;
+
+  include $NGINX_SITES_CONFIG_DIR/mspa-locations/*.conf;
+
+  location ~* ^/_api(?<path1>.*)\$ {
+    if (\$path1 = '') {
+      set \$path1 "/";
+    }
+    rewrite .* \$path1 break;
+    proxy_redirect off;
+    proxy_pass http://devapi.daptiv.com;
+  }
+
+  location ~* ^/_auth(?<path1>.*)\$ {
+    if (\$path1 = '') {
+      set \$path1 "/";
+    }
+    rewrite .* \$path1 break;
+    proxy_redirect off;
+    proxy_pass http://devauth.daptiv.com;
+  }
+
+  location ~* ^/_rm(?<path1>.*)\$ {
+    if (\$path1 = '') {
+      set \$path1 "/";
+    }
+    rewrite .* \$path1 break;
+    proxy_redirect off;
+    proxy_pass http://devrm.daptiv.com;
+  }
+
+  location ~* ^/_sso(?<path1>.*)\$ {
+    if (\$path1 = '') {
+      set \$path1 "/";
+    }
+    return 301 http://dev.daptiv.com\$path1?\$query_string;
+  }
+}
+EOF
 
 sudo mkdir -p "$NGINX_SITES_CONFIG_DIR/mspa-upstreams"
 sudo mkdir -p "$NGINX_SITES_CONFIG_DIR/mspa-locations"

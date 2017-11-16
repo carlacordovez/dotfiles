@@ -7,4 +7,4 @@ PROJECTS_DIR="$DIR/.."
 source "$PROJECTS_DIR/functions.sh"
 
 clone-missing-repo "ppm-vapi-new-feature-popup"
-clone-and-strap-repo "new-feature-composer"
+clone-with-options --strap "new-feature-composer"
