@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
+
+source "$PROJECTS_DIR/functions.sh"
+
+clone-missing-repo ppm-cmpt-new-feature-popup
+clone-missing-repo ppm-wrpr-new-feature-popup
+clone-with-options --strap ppm-vapi-new-feature-popup
+clone-with-options --strap new-feature-composer

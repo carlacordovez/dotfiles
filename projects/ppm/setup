@@ -2,14 +2,17 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
 
-echo 'adding host entries for ppm...'
+source "$PROJECTS_DIR/functions.sh"
+
+log-msg 'adding host entries for ppm...'
 bash "$DIR/add-host-entries.sh"
 
-echo 'setting up vm...'
+log-msg 'setting up vm...'
 bash "$DIR/setup-vm.sh"
 
-echo 'add nginx config for ppm...'
+log-msg 'add nginx config for ppm...'
 sudo tee "$NGINX_SITES_CONFIG_DIR/ppm.conf" <<EOF
 server {
   access_log $NGINX_LOG_DIR/devppm.daptiv.com.access.log main;
@@ -45,6 +48,5 @@ server {
 }
 EOF
 
-echo 'reload nginx config...'
+log-msg 'reload nginx config...'
 sudo nginx -s reload
-

@@ -18,17 +18,17 @@ sudo hostess add ppm.dev.daptiv.com 127.0.0.1
 sudo hostess add devrm.daptiv.com $PPM_DEV_VM_IP
 
 log-msg 'Adding nginx configuration'
-sudo tee "$NGINX_SITES_CONFIG_DIR/ppm-mspa-shared.conf" <<EOF
-include $NGINX_SITES_CONFIG_DIR/mspa-upstreams/*.conf;
+sudo tee "$NGINX_SITES_CONFIG_DIR/ppm-foxglove-shared.conf" <<EOF
+include $NGINX_FOXGLOVE_UPSTREAMS_DIR/*.conf;
 
 server {
-  access_log $NGINX_LOG_DIR/mspa.access.log main;
+  access_log $NGINX_LOG_DIR/foxglove.access.log main;
   listen 80;
   server_name ppm.dev.daptiv.com;
 
   client_max_body_size 50M;
 
-  include $NGINX_SITES_CONFIG_DIR/mspa-locations/*.conf;
+  include $NGINX_FOXGLOVE_LOCATIONS_DIR/*.conf;
 
   location ~* ^/_api(?<path1>.*)\$ {
     if (\$path1 = '') {
@@ -66,7 +66,32 @@ server {
 }
 EOF
 
-sudo mkdir -p "$NGINX_SITES_CONFIG_DIR/mspa-upstreams"
-sudo mkdir -p "$NGINX_SITES_CONFIG_DIR/mspa-locations"
+sudo mkdir -p "$NGINX_FOXGLOVE_UPSTREAMS_DIR"
+sudo mkdir -p "$NGINX_FOXGLOVE_LOCATIONS_DIR"
+
+
+MSPA_CONFIG_FILE="$NGINX_SITES_CONFIG_DIR/ppm-mspa-shared.conf"
+if [ -e "$MSPA_CONFIG_FILE" ]; then
+  log-msg 'Remove old mspa project configuration'
+  sudo rm "$MSPA_CONFIG_FILE"
+fi
+
+MSPA_UPSTREAMS_DIR="$NGINX_SITES_CONFIG_DIR/mspa-upstreams"
+if [ -e "$MSPA_UPSTREAMS_DIR" ]; then
+  log-msg 'Copy upstreams from old to new directory'
+  sudo cp $MSPA_UPSTREAMS_DIR/* $NGINX_FOXGLOVE_UPSTREAMS_DIR
+
+  log-msg 'Remove old mspa upstreams configuration directory'
+  sudo rm -r "$MSPA_UPSTREAMS_DIR"
+fi
+
+MSPA_LOCATIONS_DIR="$NGINX_SITES_CONFIG_DIR/mspa-locations"
+if [ -e "$MSPA_LOCATIONS_DIR" ]; then
+  log-msg 'Copy locations from old to new directory'
+  sudo cp $MSPA_LOCATIONS_DIR/* $NGINX_FOXGLOVE_LOCATIONS_DIR
+
+  log-msg 'Remove old mspa locations configuration directory'
+  sudo rm -r "$MSPA_LOCATIONS_DIR"
+fi
 
 sudo nginx -t && sudo nginx -s reload
