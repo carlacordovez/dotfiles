@@ -6,7 +6,7 @@ PROJECTS_DIR="$DIR/.."
 
 source "$PROJECTS_DIR/functions.sh"
 
-clone-missing-repo ppm-cmpt-new-feature-popup
-clone-with-options --strap ppm-wrpr-new-feature-popup
-clone-with-options --strap ppm-vapi-new-feature-popup
-clone-with-options --strap new-feature-composer
+clone-with-options         --git-flow ppm-cmpt-new-feature-popup
+clone-with-options --strap --git-flow ppm-wrpr-new-feature-popup
+clone-with-options --strap            ppm-vapi-new-feature-popup
+clone-with-options --strap --git-flow new-feature-composer
