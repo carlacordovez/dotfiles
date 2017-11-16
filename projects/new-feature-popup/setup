@@ -1,20 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-REPOS=( ppm-vapi-new-feature-popup ppm-cmpt-new-feature-popup ppm-wrpr-new-feature-popup new-feature-composer )
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
 
-source "$DIR/../functions.sh"
+source "$PROJECTS_DIR/functions.sh"
 
-bash "$DIR/../setup" mspa
+# require mspa project setup
+bash "$PROJECTS_DIR/setup" mspa
 
-for REPO in ${REPOS[@]}
-do
-  clone-and-strap-repo "$REPO"
-
-  REPO_DIR="$SRC_DIR/$REPO"
-  if [ -e "$REPO_DIR/strap.sh" ]; then
-    printf "\n** Running strap script **\n"
-    bash "$REPO_DIR/strap.sh"
-  fi
-done
+clone-missing-repo ppm-cmpt-new-feature-popup
+clone-missing-repo ppm-wrpr-new-feature-popup
+clone-with-options --strap ppm-vapi-new-feature-popup
+clone-with-options --strap new-feature-composer
