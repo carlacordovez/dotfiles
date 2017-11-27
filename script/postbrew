@@ -2,14 +2,26 @@
 
 DAPTIV_DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-
 [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
-if ! nodenv versions | grep -q -E ' 6.11.3 '; then
-  echo 'installing node 6.11.3...'
-  nodenv install 6.11.3
-  nodenv global 6.11.3
+# install some helpful atom plugins
+apm install cursor-history
+apm install intentions
+apm install linter-ui-default
+apm install linter
+apm install editorconfig
+apm install pretty-json
+
+DEFAULT_NODE_VERSION='8.9.1'
+if ! nodenv versions | grep -q -E " $DEFAULT_NODE_VERSION "; then
+  echo "installing node version: $DEFAULT_NODE_VERSION"
+  nodenv install $DEFAULT_NODE_VERSION
+  nodenv global $DEFAULT_NODE_VERSION
+  nodenv rehash
 fi
+
+# install pullquester utility
+npm install -g pullquester
 
 if ! [ -f "$GOPATH/go/bin/hostess" ]; then
   echo 'installing hostess command line tool...'
