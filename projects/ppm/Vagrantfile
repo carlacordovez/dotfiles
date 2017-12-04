@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "dev_ppm"
-  
+
   config.vm.guest = :windows
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -46,12 +46,13 @@ Vagrant.configure(2) do |config|
   #
   config.vm.provider "virtualbox" do |vb|
     vb.name = "dev_ppm"
-    vb.customize ["modifyvm", :id, "--natbindip1", "#{ENV["PPM_DEV_VM_IP"]}"]
+    vb.customize ["modifyvm", :id, "--natbindip2", "#{ENV["PPM_DEV_VM_IP"]}"]
+    vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
     vb.customize ["modifyvm", :id, "--vram", "64"]
     vb.customize ["modifyvm", :id, "--accelerate2dvideo", "on"]
     # Display the VirtualBox GUI when booting the machine
     vb.gui = true
-    # use 3 cpu cores
+    # use 2 cpu cores
     vb.cpus = "2"
     # Customize the amount of memory on the VM:
     vb.memory = "6144"
