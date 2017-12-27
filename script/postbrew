@@ -25,13 +25,6 @@ fi
 # install pullquester utility
 npm install -g pullquester
 
-if ! [ -f "$GOPATH/go/bin/hostess" ]; then
-  echo 'installing hostess command line tool...'
-  go get github.com/cbednarski/hostess/cmd/hostess
-
-  ln -sfv "$GOPATH/go/bin/hostess" /usr/local/bin/hostess
-fi
-
 echo 'update default nginx config...'
 sudo tee "$NGINX_CONFIG_DIR/nginx.conf" <<EOF
 
@@ -91,7 +84,7 @@ if ! [ -f "/Library/LaunchDaemons/homebrew.mxcl.nginx.plist" ]; then
   sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
 
   echo 'add /usr/local/bin to application path...'
-  sudo launchctl config user path "/usr/local/bin:$PATH:$GOPATH/go/bin"
+  sudo launchctl config user path "/usr/local/bin:$PATH"
 fi
 
 echo 'reload nginx config...'
