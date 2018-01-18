@@ -12,8 +12,16 @@ if ! VBoxManage natnetwork list | grep -q -E 'Name: +NatNetwork$' ; then
 fi
 
 if ! vagrant box list | grep -q dev_ppm ; then
-  echo "adding vagrant box..."
-  vagrant box add http://artrepo.daptiv.com:8081/artifactory/api/vagrant/vagrant-local/dev_ppm
+  VAGRANT_BOX_URL="http://artrepo.daptiv.com:8081/artifactory/api/vagrant/vagrant-local/dev_ppm"
+  if [ -z "$VAGRANT_LOCAL_BOX_PATH" ] || [ -z "$VAGRANT_LOCAL_BOX_VERSION" ]; then
+    echo "adding vagrant box..."
+    vagrant box add $VAGRANT_BOX_URL
+  else
+    echo "adding vagrant box from local path..."
+    vagrant box add dev_ppm "$VAGRANT_LOCAL_BOX_PATH"
+    mv ~/.vagrant.d/boxes/dev_ppm/0 ~/.vagrant.d/boxes/dev_ppm/$VAGRANT_LOCAL_BOX_VERSION
+    echo -n "$VAGRANT_BOX_URL" > ~/.vagrant.d/boxes/dev_ppm/metadata_url
+  fi
 fi
 
 DEV_PPM_DIR="$SRC_DIR/dev_ppm"

@@ -5,12 +5,14 @@ DAPTIV_DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
 # install some helpful atom plugins
-apm install cursor-history
-apm install intentions
-apm install linter-ui-default
-apm install linter
-apm install editorconfig
-apm install pretty-json
+if brew list atom >/dev/null 2>&1; then
+  apm install cursor-history
+  apm install intentions
+  apm install linter-ui-default
+  apm install linter
+  apm install editorconfig
+  apm install pretty-json
+fi
 
 DEFAULT_NODE_VERSION='8.9.1'
 if ! nodenv versions | grep -q -E " $DEFAULT_NODE_VERSION "; then
@@ -22,13 +24,6 @@ fi
 
 # install pullquester utility
 npm install -g pullquester
-
-if ! [ -f "$GOPATH/go/bin/hostess" ]; then
-  echo 'installing hostess command line tool...'
-  go get github.com/cbednarski/hostess/cmd/hostess
-
-  ln -sfv "$GOPATH/go/bin/hostess" /usr/local/bin/hostess
-fi
 
 echo 'update default nginx config...'
 sudo tee "$NGINX_CONFIG_DIR/nginx.conf" <<EOF
@@ -89,7 +84,7 @@ if ! [ -f "/Library/LaunchDaemons/homebrew.mxcl.nginx.plist" ]; then
   sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
 
   echo 'add /usr/local/bin to application path...'
-  sudo launchctl config user path "/usr/local/bin:$PATH:$GOPATH/go/bin"
+  sudo launchctl config user path "/usr/local/bin:$PATH"
 fi
 
 echo 'reload nginx config...'
