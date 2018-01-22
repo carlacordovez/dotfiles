@@ -2,10 +2,12 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
 
-echo 'adding host entries for cognos 10.2.2...'
+source "$PROJECTS_DIR/functions.sh"
+
+log-msg 'adding host entries for cognos 10.2.2...'
 bash "$DIR/add-host-entries.sh"
 
-echo 'setting up cognos 10.2.2 vm...'
+log-msg 'setting up cognos 10.2.2 vm...'
 bash "$DIR/setup-vm.sh"
-

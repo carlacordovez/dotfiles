@@ -2,11 +2,17 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if ! vagrant box list | grep -q c1022 ; then
-  echo "adding vagrant box..."
-  vagrant box add http://artrepo.daptiv.com:8081/artifactory/api/vagrant/vagrant-local/c1022
+  VAGRANT_BOX_URL="http://artrepo.daptiv.com:8081/artifactory/api/vagrant/vagrant-local/c1022"
+  if [ -z "$VAGRANT_LOCAL_BOX_PATH" ] || [ -z "$VAGRANT_LOCAL_BOX_VERSION" ]; then
+  	echo "adding vagrant box..."
+  	vagrant box add $VAGRANT_BOX_URL
+  else
+  	echo "adding vagrant box from local path..."
+  	vagrant box add c1022 "$VAGRANT_LOCAL_BOX_PATH"
+  fi
 fi
 
-CGNOS_VM_DIR="$SRC_DIR/c1022"
+COGNOS_VM_DIR="$SRC_DIR/c1022"
 
 mkdir -p "$COGNOS_VM_DIR"
 
@@ -23,3 +29,7 @@ echo "running vagrant up..."
 cd "$COGNOS_VM_DIR"
 vagrant up
 
+echo "configure network adapters..."
+vmid="$( VBoxManage list vms | awk '/c1022/ { print substr($2, 2, 36) }' )"
+vboxmanage controlvm $vmid nic1 natnetwork NatNetwork
+vboxmanage controlvm $vmid nic2 hostonly vboxnet0
