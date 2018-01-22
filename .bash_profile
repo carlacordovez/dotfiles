@@ -16,6 +16,8 @@ export SRC_DIR="$HOME/src"
 export NGINX_CONFIG_DIR="/usr/local/etc/nginx"
 export NGINX_SITES_CONFIG_DIR="$NGINX_CONFIG_DIR/servers"
 export NGINX_LOG_DIR="/usr/local/var/log/nginx"
+export NGINX_FOXGLOVE_UPSTREAMS_DIR="$NGINX_CONFIG_DIR/foxglove-upstreams"
+export NGINX_FOXGLOVE_LOCATIONS_DIR="$NGINX_CONFIG_DIR/foxglove-locations"
 
 export PATH="$HOME/.nodenv/shims:$PATH:$GOPATH/bin"
 # set open file limit to 3000 which is max before being ignored

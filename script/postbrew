@@ -2,21 +2,28 @@
 
 DAPTIV_DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-
 [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
-if ! nodenv versions | grep -q -E ' 6.11.3 '; then
-  echo 'installing node 6.11.3...'
-  nodenv install 6.11.3
-  nodenv global 6.11.3
+# install some helpful atom plugins
+if brew list atom >/dev/null 2>&1; then
+  apm install cursor-history
+  apm install intentions
+  apm install linter-ui-default
+  apm install linter
+  apm install editorconfig
+  apm install pretty-json
 fi
 
-if ! [ -f "$GOPATH/go/bin/hostess" ]; then
-  echo 'installing hostess command line tool...'
-  go get github.com/cbednarski/hostess/cmd/hostess
-  
-  ln -sfv "$GOPATH/go/bin/hostess" /usr/local/bin/hostess
+DEFAULT_NODE_VERSION='8.9.1'
+if ! nodenv versions | grep -q -E " $DEFAULT_NODE_VERSION "; then
+  echo "installing node version: $DEFAULT_NODE_VERSION"
+  nodenv install $DEFAULT_NODE_VERSION
+  nodenv global $DEFAULT_NODE_VERSION
+  nodenv rehash
 fi
+
+# install pullquester utility
+npm install -g pullquester
 
 echo 'update default nginx config...'
 sudo tee "$NGINX_CONFIG_DIR/nginx.conf" <<EOF
@@ -75,13 +82,16 @@ if ! [ -f "/Library/LaunchDaemons/homebrew.mxcl.nginx.plist" ]; then
   echo 'register nginx to startup after boot...'
   sudo cp /usr/local/opt/nginx/homebrew.mxcl.nginx.plist /Library/LaunchDaemons
   sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
-  
+
   echo 'add /usr/local/bin to application path...'
-  sudo launchctl config user path "/usr/local/bin:$PATH:$GOPATH/go/bin"
+  sudo launchctl config user path "/usr/local/bin:$PATH"
 fi
 
 echo 'reload nginx config...'
 sudo nginx -s reload
+
+echo 'setup foxglove project...'
+bash "$DAPTIV_DOTFILES/projects/setup" foxglove
 
 echo 'setup ppm project...'
 bash "$DAPTIV_DOTFILES/projects/setup" ppm

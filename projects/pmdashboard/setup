@@ -1,22 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
-REPOS=( ppm-mspa-projectdashboard ppm-vapi-projectdashboard )
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
 
-bash "$DIR/../setup" mspa
+source "$PROJECTS_DIR/functions.sh"
 
-for REPO in ${REPOS[@]}
-do
-  REPO_DIR="$SRC_DIR/$REPO"
-  printf "\n** Checking for repo in $REPO_DIR\n"
-  if ! [ -d "$REPO_DIR" ]; then
-    printf "** Cloning $REPO repo **\n"
-    git clone git@github.com:daptiv/$REPO.git "$REPO_DIR"
-
-    if [ -e "$REPO_DIR/strap.sh" ]; then
-      printf "\n** Running strap script **\n"
-      bash "$REPO_DIR/strap.sh"
-    fi
-  fi
-done
+clone-with-options --strap 'ppm-mspa-projectdashboard'
+clone-with-options --strap 'ppm-vapi-projectdashboard'

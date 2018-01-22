@@ -2,16 +2,8 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
 
-if ! [ -d "$SRC_DIR/PpmSpa" ]; then
-    echo 'cloning PpmSpa repo...'
-    git clone git@github.com:daptiv/PpmSpa.git "$SRC_DIR/PpmSpa"
-fi
+source "$PROJECTS_DIR/functions.sh"
 
-if [ -f "$SRC_DIR/PpmSpa/strap.sh" ]; then
-	echo "running strapfile..."
-	bash "$SRC_DIR/PpmSpa/strap.sh"
-else
-	echo "strap file not found in PpmSpa repo!"
-fi
-
+clone-with-options --strap "PpmSpa"
