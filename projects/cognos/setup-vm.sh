@@ -30,6 +30,5 @@ cd "$COGNOS_VM_DIR"
 vagrant up
 
 echo "configure network adapters..."
-vmid="$( VBoxManage list vms | awk '/c1022/ { print substr($2, 2, 36) }' )"
-vboxmanage controlvm $vmid nic1 natnetwork NatNetwork
-vboxmanage controlvm $vmid nic2 hostonly vboxnet0
+vboxmanage controlvm c1022 nic1 natnetwork NatNetwork
+vboxmanage controlvm c1022 nic2 hostonly vboxnet0
