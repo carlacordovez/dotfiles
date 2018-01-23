@@ -32,6 +32,7 @@ brew "awscli"
 brew "git-flow-avh"
 cask "postman"
 brew "hostess"
+brew "coreutils"
 
 # browsers
 cask "google-chrome"
