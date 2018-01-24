@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+source ../projects/functions.sh
 
 DOTFILESDIRREL=$(dirname $0)
 cd $DOTFILESDIRREL/..
@@ -7,7 +8,7 @@ DAPTIV_DOTFILES=$(pwd -P)
 ensure_dotfile_link() {
   HOMEFILE="$HOME/$1"
   DOTFILE="$DAPTIV_DOTFILES/$1"
-  
+
   if [ -L "$HOMEFILE" ] && ! [ -d "$DOTFILE" ]; then
     ln -sfv "$DOTFILE" "$HOMEFILE"
   else
@@ -20,3 +21,6 @@ ensure_dotfile_link .bash_profile
 ensure_dotfile_link .bashrc
 ensure_dotfile_link .npmrc
 ensure_dotfile_link .Daptiv.Brewfile
+
+# clone the strap repo for use in future strap runs.
+clone-with-options strap

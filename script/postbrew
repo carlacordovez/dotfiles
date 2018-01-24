@@ -95,3 +95,6 @@ bash "$DAPTIV_DOTFILES/projects/setup" foxglove
 
 echo 'setup ppm project...'
 bash "$DAPTIV_DOTFILES/projects/setup" ppm
+
+echo 'setup ppmspa project...'
+bash "$DAPTIV_DOTFILES/projects/setup" ppmspa
