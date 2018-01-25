@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-source ../projects/functions.sh
 
 DOTFILESDIRREL=$(dirname $0)
 cd $DOTFILESDIRREL/..
@@ -21,6 +20,3 @@ ensure_dotfile_link .bash_profile
 ensure_dotfile_link .bashrc
 ensure_dotfile_link .npmrc
 ensure_dotfile_link .Daptiv.Brewfile
-
-# clone the strap repo for use in future strap runs.
-clone-with-options strap

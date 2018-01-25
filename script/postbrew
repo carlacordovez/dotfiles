@@ -4,6 +4,11 @@ DAPTIV_DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
 [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
+source "$DAPTIV_DOTFILES/projects/functions.sh"
+
+# clone the strap repo for use in future strap runs.
+clone-with-options strap
+
 # install some helpful atom plugins
 if brew list atom >/dev/null 2>&1; then
   apm install cursor-history
