@@ -26,7 +26,7 @@ ulimit -n 3000
 strap() {
   #need STRAP_GITHUB_USER to be able to fetch user dotfiles repo
   export STRAP_GITHUB_USER=${STRAP_GITHUB_USER:-"$( git config --global --get github.user )"}
-  bash ~/src/strap/bin/strap.sh
+  bash ~/src/strap/bin/strap.sh $@
 }
 
 vmstart() {
