@@ -95,6 +95,11 @@ fi
 echo 'reload nginx config...'
 sudo nginx -s reload
 
+echo 'allow nginx access through application-level firewall'
+NGINX_BIN_REAL_PATH=$(realpath /usr/local/bin/nginx)
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add "$NGINX_BIN_REAL_PATH"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp "$NGINX_BIN_REAL_PATH"
+
 echo 'setup foxglove project...'
 bash "$DAPTIV_DOTFILES/projects/setup" foxglove
 
