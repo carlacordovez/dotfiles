@@ -11,6 +11,10 @@ def log(msg):
     if debug:
         print msg
 
+def has_app_artifact(app):
+    app_filename = check_output("brew cask info {0} | awk '/\(App\)/ {{ match($0, /.*\.app/); print substr($0, RSTART, RLENGTH); }}'".format(app), shell=True)
+    return len(app_filename) > 0
+
 def app_exists(app):
     app_filename = check_output("brew cask info {0} | awk '/\(App\)/ {{ match($0, /.*\.app/); print substr($0, RSTART, RLENGTH); }}'".format(app), shell=True)
     app_file = "/Applications/{0}".format(app_filename.strip())
@@ -44,6 +48,10 @@ def fix_casks(brewfile):
 
         if app in casks:
             log("skipping properly casked app: {0}".format(app))
+            continue
+
+        if not has_app_artifact(app):
+            log("cask {0} has a non .app artifact. Most likely a .pkg artifact. run `brew cask info {0}` for more details.".format(app))
             continue
 
         log("checking {0}".format(app))
