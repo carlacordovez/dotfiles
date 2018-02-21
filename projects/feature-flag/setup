@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECTS_DIR="$DIR/.."
+
+source "$PROJECTS_DIR/functions.sh"
+
+clone-with-options --strap "feature-flag-api"
