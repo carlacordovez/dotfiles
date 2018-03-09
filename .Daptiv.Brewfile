@@ -28,7 +28,11 @@ cask "trailer"
 cask "caffeine"
 brew "go"
 brew "gawk"
-brew "awscli"
+
+# awscli has a dependency on 'python' which was recently updated to install python 3 instead of python2
+#  this breaks node-gyp. until this gets sorted out, we will not automatically install awscli
+# brew "awscli"
+
 brew "git-flow-avh"
 cask "postman"
 brew "hostess"

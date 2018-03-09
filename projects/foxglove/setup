@@ -9,7 +9,6 @@ source "$PROJECTS_DIR/functions.sh"
 log-msg "This script requires sudo access to configure nginx, hosts, etc." \
         "If prompted, please enter your password."
 
-sudo -v
 sudo /usr/bin/true
 
 log-msg 'Adding host entries'
@@ -66,7 +65,9 @@ server {
 }
 EOF
 
+log-msg 'Creating Foxglove Nginx upstreams directory'
 sudo mkdir -p "$NGINX_FOXGLOVE_UPSTREAMS_DIR"
+log-msg 'Creating Foxglove Nginx locations directory'
 sudo mkdir -p "$NGINX_FOXGLOVE_LOCATIONS_DIR"
 
 

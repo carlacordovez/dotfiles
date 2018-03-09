@@ -37,10 +37,14 @@ if [ 1 == $(vboxmanage list vms | grep -c "dev_ppm") ] ; then
     echo "$vmid" > "$DEV_PPM_DIR/.vagrant/machines/default/virtualbox/id"
 fi
 
-echo "running vagrant up..."
+echo "starting up and provisioning dev vm..."
 cd "$DEV_PPM_DIR"
 vagrant up
 
 echo "set network adapter 1 to natnetwork..."
-vmid="$( VBoxManage list vms | awk '/dev_ppm/ { print substr($2, 2, 36) }' )"
-vboxmanage controlvm $vmid nic1 natnetwork NatNetwork
+vboxmanage controlvm dev_ppm nic1 natnetwork NatNetwork
+
+echo "shutting down dev vm..."
+vagrant halt -f
+
+echo "done setting up vm"

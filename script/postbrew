@@ -19,7 +19,7 @@ if brew list atom >/dev/null 2>&1; then
   apm install pretty-json
 fi
 
-DEFAULT_NODE_VERSION='8.9.1'
+DEFAULT_NODE_VERSION='8.9.4'
 if ! nodenv versions | grep -q -E " $DEFAULT_NODE_VERSION "; then
   echo "installing node version: $DEFAULT_NODE_VERSION"
   nodenv install $DEFAULT_NODE_VERSION
@@ -100,11 +100,12 @@ NGINX_BIN_REAL_PATH=$(realpath /usr/local/bin/nginx)
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add "$NGINX_BIN_REAL_PATH"
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp "$NGINX_BIN_REAL_PATH"
 
-echo 'setup foxglove project...'
-bash "$DAPTIV_DOTFILES/projects/setup" foxglove
-
 echo 'setup ppm project...'
 bash "$DAPTIV_DOTFILES/projects/setup" ppm
 
+echo 'setup foxglove project...'
+bash "$DAPTIV_DOTFILES/projects/setup" foxglove
+
 echo 'setup ppmspa project...'
 bash "$DAPTIV_DOTFILES/projects/setup" ppmspa
+echo 'SKIPPED!'
