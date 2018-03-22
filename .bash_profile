@@ -37,5 +37,9 @@ vmstop() {
   VBoxManage controlvm ${1:-dev_ppm} poweroff
 }
 
+if which rbenv 2>&1 >/dev/null; then
+  eval "$(rbenv init -)"
+fi
+
 [ -f "$DOTFILES_HOME/.bash_profile" ] && source $DOTFILES_HOME/.bash_profile
 [ -f "$HOME/.bashrc" ] && source $HOME/.bashrc
