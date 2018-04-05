@@ -11,3 +11,4 @@ source "$PROJECTS_DIR/functions.sh"
 
 clone-with-options --strap 'ppm-mspa-delegates'
 clone-with-options --strap 'ppm-vapi-delegates'
+clone-with-options --strap 'ppm-mapi-delegates'
