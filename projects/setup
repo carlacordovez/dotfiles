@@ -29,6 +29,9 @@ elif [ -f "$PROJECT_SETUP_FILE" ]; then
   else
     echo "Running: $PROJECT_SETUP_FILE"
     bash "$PROJECT_SETUP_FILE"
+    
+    echo "Finished running setup for: $PROJECT"
+    
     if [ -z "$PROJECT_INSTALLED" ]; then
       echo "$PROJECT" >> "$INSTALLED_PROJECTS_FILE"
     fi
