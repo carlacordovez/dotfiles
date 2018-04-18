@@ -20,5 +20,5 @@ fi
 #---------------------------------------------------------------------
 # Personal setup
 #---------------------------------------------------------------------
-personal="$HOME/src/bitbucket/configuration/setup.sh"
+#personal="$HOME/src/bitbucket/configuration/setup.sh"
 #[ -f "$personal" ] && bash "$personal"
