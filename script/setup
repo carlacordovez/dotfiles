@@ -16,5 +16,5 @@ ensure_dotfile_link() {
   fi
 }
 
-ensure_dotfile_link .gitconfig
+#ensure_dotfile_link .gitconfig
 ensure_dotfile_link .Brewfile
