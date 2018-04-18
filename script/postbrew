@@ -1,111 +1,24 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -e
 
-DAPTIV_DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+# source bash profile to get environment variables set
+#[ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
-[ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
-
-source "$DAPTIV_DOTFILES/projects/functions.sh"
-
-# clone the strap repo for use in future strap runs.
-clone-with-options strap
-
-# install some helpful atom plugins
-if brew list atom >/dev/null 2>&1; then
-  apm install cursor-history
-  apm install intentions
-  apm install linter-ui-default
-  apm install linter
-  apm install editorconfig
-  apm install pretty-json
+#---------------------------------------------------------------------
+# Projects
+#---------------------------------------------------------------------
+echo "Configuring projects"
+SETUP_SCRIPT="$HOME/.daptiv-dotfiles/projects/setup"
+if [ -f "$SETUP_SCRIPT" ]; then
+	# PPM is setup by the base scripts - no need to manual include
+	bash "$SETUP_SCRIPT" ttm
+	bash "$SETUP_SCRIPT" ppmspa
+	bash "$SETUP_SCRIPT" pmdashboard
+	bash "$SETUP_SCRIPT" cognos
 fi
 
-DEFAULT_NODE_VERSION='8.9.4'
-if ! nodenv versions | grep -q -E " $DEFAULT_NODE_VERSION "; then
-  echo "installing node version: $DEFAULT_NODE_VERSION"
-  nodenv install $DEFAULT_NODE_VERSION
-  nodenv global $DEFAULT_NODE_VERSION
-  nodenv rehash
-fi
-
-# install pullquester utility
-npm install -g pullquester
-
-echo 'update default nginx config...'
-sudo tee "$NGINX_CONFIG_DIR/nginx.conf" <<EOF
-
-user $USER staff;
-
-worker_processes 2;
-pid /usr/local/var/run/nginx.pid;
-
-events {
-  worker_connections 1024;
-}
-
-http {
-  include mime.types;
-  default_type application/octet-stream;
-
-  log_format main '\$remote_addr - $remote_user [\$time_local] \$status '
-                  '"\$request" \$body_bytes_sent "\$http_referer" '
-                  '"\$http_user_agent" "http_x_forwarded_for"';
-
-  access_log $NGINX_LOG_DIR/access.log main;
-  error_log  $NGINX_LOG_DIR/error.log debug;
-
-  sendfile on;
-
-  tcp_nopush  on;
-  tcp_nodelay off;
-
-  gzip              on;
-  gzip_http_version 1.0;
-  gzip_comp_level   2;
-  gzip_proxied      any;
-
-  server_names_hash_bucket_size 128;
-  server_names_hash_max_size 20000;
-  proxy_headers_hash_bucket_size 128;
-  proxy_headers_hash_max_size 20000;
-
-  underscores_in_headers on;
-
-  server {
-    listen      80 default_server;
-    server_name localhost;
-
-    location / {
-      root   $NGINX_CONFIG_DIR/public;
-    }
-  }
-
-  include $NGINX_SITES_CONFIG_DIR/*.conf;
-}
-EOF
-
-if ! [ -f "/Library/LaunchDaemons/homebrew.mxcl.nginx.plist" ]; then
-  echo 'register nginx to startup after boot...'
-  sudo cp /usr/local/opt/nginx/homebrew.mxcl.nginx.plist /Library/LaunchDaemons
-  sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
-
-  echo 'add /usr/local/bin to application path...'
-  sudo launchctl config user path "/usr/local/bin:$PATH"
-fi
-
-echo 'reload nginx config...'
-sudo nginx -s reload
-
-echo 'allow nginx access through application-level firewall'
-NGINX_BIN_REAL_PATH=$(realpath /usr/local/bin/nginx)
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add "$NGINX_BIN_REAL_PATH"
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp "$NGINX_BIN_REAL_PATH"
-
-echo 'setup ppm project...'
-bash "$DAPTIV_DOTFILES/projects/setup" ppm
-
-echo 'setup foxglove project...'
-bash "$DAPTIV_DOTFILES/projects/setup" foxglove
-
-echo 'setup ppmspa project...'
-bash "$DAPTIV_DOTFILES/projects/setup" ppmspa
-echo 'SKIPPED!'
+#---------------------------------------------------------------------
+# Personal setup
+#---------------------------------------------------------------------
+personal="$HOME/src/bitbucket/configuration/setup.sh"
+#[ -f "$personal" ] && bash "$personal"
