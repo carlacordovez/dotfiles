@@ -4,7 +4,7 @@ cask "kdiff3"
 cask "visual-studio-code"
 brew "yarn"
 brew "heroku"
-brew cask install "sourcetree"
+#brew cask install "sourcetree"
 
 # Misc
 cask "caffeine"
