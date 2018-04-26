@@ -2,4 +2,4 @@
 # your personal .bashrc can be found in ~/.dotfiles/.bashrc
 # and is automatically loaded from this file.
 
-[ -f "$DOTFILES_HOME/.bashrc" ] && source $DOTFILES_HOME/.bashrc
+#[ -f "$DOTFILES_HOME/.bashrc" ] && source $DOTFILES_HOME/.bashrc
